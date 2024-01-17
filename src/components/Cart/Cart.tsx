@@ -1,18 +1,15 @@
 import React from "react";
-import * as S from "./styles";
-import { useDispatch, useSelector } from "react-redux";
-import { RootReducer } from "../../redux/root-reducer";
+import { useDispatch } from "react-redux";
+import { Products } from "../../data/products";
 import { removeProduct } from "../../redux/Cart/cart-slice";
+import * as S from "./styles";
 
 interface CartProps {
   showCart: boolean;
+  cart: Products[];
 }
 
-export const Cart: React.FC<CartProps> = ({ showCart }) => {
-  const { cart } = useSelector(
-    (rootReducer: RootReducer) => rootReducer.cartReducer
-  );
-
+export const Cart: React.FC<CartProps> = ({ showCart, cart }) => {
   const dispatch = useDispatch();
 
   const total = cart.reduce((totalCart, product) => {
@@ -34,7 +31,7 @@ export const Cart: React.FC<CartProps> = ({ showCart }) => {
         ))}
       </S.CartProductsList>
 
-      <S.CartTotal>Total: {total}</S.CartTotal>
+      <S.CartTotal data-testid="total">Total: ${total}</S.CartTotal>
     </S.Container>
   );
 };
